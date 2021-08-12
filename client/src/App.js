@@ -9,7 +9,7 @@ function App() {
   const handleImageChange = (e) => {
     //get multiple images & convert to base64 fro cloudinary
     if (e.target.files) {
-      Array.from(e.target.files).map((file) => {
+      Array.from(e.target.files).forEach((file) => {
         URL.createObjectURL(file);
         var reader = new FileReader();
         reader.readAsDataURL(file);
