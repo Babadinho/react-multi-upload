@@ -21,7 +21,7 @@ router.post('/upload', upload.array('images', 12), async (req, res) => {
       //Push uploaded images URL to files
       files.push(imageUrl.url);
     }
-    // send result to client
+    // send response to client
     res.json(files);
   } catch (err) {
     console.log(err);

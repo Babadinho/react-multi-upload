@@ -23,7 +23,7 @@ function App() {
     }
     /// images a blob
     // if (e.target.files) {
-    //   const fileArray = Array.from(e.target.files).map((file) =>
+    //   const fileArray = Array.forEach(e.target.files).map((file) =>
     //     URL.createObjectURL(file)
     //   );
     //   console.log(fileArray);
