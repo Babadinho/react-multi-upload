@@ -7,7 +7,7 @@ function App() {
   const [images, setImages] = useState([]);
 
   const handleImageChange = (e) => {
-    //get multiple images & convert to base64 fro cloudinary
+    //get multiple images & convert to base64 for cloudinary
     if (e.target.files) {
       Array.from(e.target.files).forEach((file) => {
         URL.createObjectURL(file);
@@ -16,7 +16,6 @@ function App() {
         reader.onloadend = () => {
           var base64data = reader.result;
           setImages((prevImages) => prevImages.concat(base64data));
-          // console.log(base64data);
           Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
         };
       });
@@ -33,14 +32,14 @@ function App() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    let productData = new FormData();
-    for (let i = 0; i < images.length; i++) {
-      images && productData.append('images', images[i]);
-    }
-
     try {
+      e.preventDefault();
+
+      let productData = new FormData();
+      for (let i = 0; i < images.length; i++) {
+        images && productData.append('images', images[i]);
+      }
+
       const res = axios.post(
         `${process.env.REACT_APP_API}/upload`,
         productData,
@@ -51,7 +50,6 @@ function App() {
           },
         }
       );
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -92,7 +90,7 @@ function App() {
                             <img
                               key={i}
                               src={image}
-                              alt='preview_image'
+                              alt='image_preview'
                               className='img img-fluid m-2'
                               style={{ height: '75px', width: '75px' }}
                             />
