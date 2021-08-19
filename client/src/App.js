@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/js/bootstrap';
 
@@ -40,7 +41,7 @@ function App() {
         images && productData.append('images', images[i]);
       }
 
-      const res = axios.post(
+      const res = await axios.post(
         `${process.env.REACT_APP_API}/upload`,
         productData,
         {
@@ -50,6 +51,20 @@ function App() {
           },
         }
       );
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleImageDelete = async (image) => {
+    const imageIndex = images.indexOf(image);
+
+    try {
+      if (imageIndex !== -1) {
+        const imageArray = images.filter((item) => item !== image);
+        setImages(imageArray);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -58,11 +73,11 @@ function App() {
   return (
     <>
       <div className='row container-fluid'>
-        <div className='col-md-8 mx-auto'>
+        <div className='col-md-7 mx-auto'>
           <div className='card'>
             <div className='card-body'>
               <form onSubmit={handleSubmit}>
-                <div className='mx-auto col-md-8'>
+                <div className='mx-auto col-md-9'>
                   <h6>Upload Images*</h6>
                   <div className='form-group mb-3 d-flex'>
                     <div>
@@ -71,7 +86,7 @@ function App() {
                         style={{ fontSize: '30px' }}
                       >
                         <div>
-                          <i class='fas fa-plus fa-1x p-4'></i>
+                          <i className='fas fa-plus fa-1x p-4'></i>
                         </div>
                         <input
                           onChange={handleImageChange}
@@ -84,16 +99,26 @@ function App() {
                       </label>
                     </div>
                     {images && images.length > 0 && (
-                      <div>
+                      <div className='d-flex flex-wrap'>
                         {images.map((image, i) => {
                           return (
-                            <img
-                              key={i}
-                              src={image}
-                              alt='image_preview'
-                              className='img img-fluid m-2'
-                              style={{ height: '75px', width: '75px' }}
-                            />
+                            <div className='position-relative' key={i}>
+                              <img
+                                src={image}
+                                alt='preview_image'
+                                className='img img-fluid m-2'
+                                style={{ height: '75px', width: '75px' }}
+                              />
+                              <span
+                                className='position-absolute end-0'
+                                onClick={() => handleImageDelete(images[i])}
+                              >
+                                <i
+                                  className='fas fa-times-circle text-danger'
+                                  role='button'
+                                ></i>
+                              </span>
+                            </div>
                           );
                         })}
                       </div>
