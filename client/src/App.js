@@ -21,7 +21,7 @@ function App() {
         };
       });
     }
-    /// images a blob
+    /// uploading images as blob
     // if (e.target.files) {
     //   const fileArray = Array.from(e.target.files).forEach((file) =>
     //     URL.createObjectURL(file)
